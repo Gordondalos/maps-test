@@ -1,3 +1,6 @@
+Видео как это работает
+https://www.youtube.com/watch?v=KSG-ToS_clE&feature=youtu.be
+
 Функции для фронтэнда:
 
 Главная страница:
