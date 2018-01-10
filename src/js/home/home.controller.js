@@ -3,9 +3,20 @@ app.controller('homeController', ['$scope', 'jsonrpc', 'myCitiesFactory', functi
     getCities = function () {
         jsonrpc.request('get_cities', {"key": "7c4073d1-ffd0-4e32-bd56-03829dc67126"})
             .then(function(result) {
-                $scope.cities = _.sortBy(result.data.result, function (o) {
+                var sortCity = _.sortBy(result.data.result, function (o) {
                     return o.city_name;
                 }) ;
+
+                _.each(sortCity, function (item, index) {
+                    if (item.districts && item.districts.length > 0) {
+                       var sortDistrics =  _.sortBy(item.districts, function (o) {
+                            return o.name;
+                        }) ;
+                       sortCity[index]['districts'] = sortDistrics;
+                    }
+                });
+
+                $scope.cities = sortCity;
                 myCitiesFactory.setCities($scope.cities);
                 console.log('cities from factory', myCitiesFactory.cities);
                 _.each($scope.cities, function (city) {
