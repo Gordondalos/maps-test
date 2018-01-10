@@ -3,8 +3,10 @@ app.controller('homeController', ['$scope', 'jsonrpc', 'myCitiesFactory', functi
     getCities = function () {
         jsonrpc.request('get_cities', {"key": "7c4073d1-ffd0-4e32-bd56-03829dc67126"})
             .then(function(result) {
-                $scope.cities = result.data.result;
-                myCitiesFactory.setCities( $scope.cities);
+                $scope.cities = _.sortBy(result.data.result, function (o) {
+                    return o.city_name;
+                }) ;
+                myCitiesFactory.setCities($scope.cities);
                 console.log('cities from factory', myCitiesFactory.cities);
                 _.each($scope.cities, function (city) {
                     if(city.city_name === 'test'){
@@ -52,6 +54,21 @@ app.controller('homeController', ['$scope', 'jsonrpc', 'myCitiesFactory', functi
         }
     });
 
+
+    $scope.sortByPopulation = function () {
+        _.each($scope.cities, function (item, index) {
+            var count = 0;
+            if(item.districts && item.districts.length > 0){
+                _.each(item.districts, function (district) {
+                    count += Number(district.population);
+                });
+            }
+            $scope.cities[index]['countPopulation'] = count;
+        });
+        $scope.cities = _.sortBy($scope.cities, function (obj) {
+            return obj.countPopulation
+        })
+    }
 
 
 }]);
