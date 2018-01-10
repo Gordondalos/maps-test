@@ -42,8 +42,6 @@ app.controller('cityController', ['$scope', 'jsonrpc', '$location', '$routeParam
         if (!$scope.city.districts) {
             $scope.city.districts = [];
         }
-
-
         saveDistricts();
     };
 
@@ -58,11 +56,11 @@ app.controller('cityController', ['$scope', 'jsonrpc', '$location', '$routeParam
                 .then(function (value) {
                     $scope.city.districts.push({
                         name: $scope.name,
-                        population: $scope.population
+                        population: $scope.population,
+                        district_id: value.data.result
                     });
-                    console.log(value);
-                    this.name = '';
-                    this.population = '';
+                    $scope.name = '';
+                    $scope.population = '';
                 })
                 .catch(function (error) {
                     debugger;
@@ -190,7 +188,7 @@ app.controller('cityController', ['$scope', 'jsonrpc', '$location', '$routeParam
                 });
         }
 
-    }
+    };
 
     $scope.deleteCity = function () {
         if ($scope.city && $scope.city.city_id) {
