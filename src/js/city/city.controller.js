@@ -43,22 +43,23 @@ app.controller('cityController', ['$scope', 'jsonrpc', '$location', '$routeParam
             $scope.city.districts = [];
         }
 
-        $scope.city.districts.push({
-            name: $scope.name,
-            population: $scope.population
-        });
+
         saveDistricts();
     };
-    
+
     var saveDistricts = function () {
-        if ($scope.name && $scope.population) {
+        if ($scope.name && $scope.population && Number($scope.population) > 0) {
             jsonrpc.request('create_district', {
                 "key": "7c4073d1-ffd0-4e32-bd56-03829dc67126",
                 "city_id": $scope.city.city_id,
                 "name": $scope.name,
-                "population": $scope.population
+                "population": Number($scope.population)
             })
                 .then(function (value) {
+                    $scope.city.districts.push({
+                        name: $scope.name,
+                        population: $scope.population
+                    });
                     console.log(value);
                     this.name = '';
                     this.population = '';
@@ -67,8 +68,10 @@ app.controller('cityController', ['$scope', 'jsonrpc', '$location', '$routeParam
                     debugger;
                     console.log(error);
                 });
+        } else {
+            alert( 'Error: Population is not number !')
         }
-    }
+    };
 
     $scope.save = function () {
 
@@ -115,16 +118,79 @@ app.controller('cityController', ['$scope', 'jsonrpc', '$location', '$routeParam
         }
     };
     $scope.isDelete = function () {
-        return $scope.city.city_id > 0;
+        return Number($scope.city.city_id) > 0;
     };
 
-    $scope.delete = function (index) {
+
+
+    $scope.editDistrict = function (index) {
         _.each($scope.city.districts, function (item, i) {
             if (index === i) {
-                $scope.city.districts.splice(i, 1);
+                $scope.name = item.name;
+                $scope.population = item.population;
+                $scope.district_id = item.district_id;
+                $scope.districtNowEdit = true;
             }
         })
     };
+
+    $scope.saveDistrict = function(){
+        if ($scope.district_id) {
+            jsonrpc.request('set_district', {
+                "key": "7c4073d1-ffd0-4e32-bd56-03829dc67126",
+                "district_id": $scope.district_id,
+                "name": $scope.name,
+                "population": $scope.population
+            })
+                .then(function (value) {
+                    _.each($scope.city.districts, function (item) {
+                        if(item.district_id === $scope.district_id){
+                           item.name = $scope.name;
+                           item.population = $scope.population;
+                            $scope.districtNowEdit = false;
+                            $scope.district_id = undefined;
+                            $scope.name = '';
+                            $scope.population = '';
+                        }
+                    })
+
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        }
+    };
+
+
+    $scope.deleteDistrict = function(){
+        if ($scope.district_id) {
+            jsonrpc.request('delete_district', {
+                "key": "7c4073d1-ffd0-4e32-bd56-03829dc67126",
+                "district_id": $scope.district_id
+            })
+                .then(function (value) {
+                    _.each($scope.city.districts, function (item) {
+                        if(Number(item.district_id) === Number($scope.district_id)){
+                            _.each($scope.city.districts, function (it, index) {
+                                if(Number(it.district_id) === Number($scope.district_id)){
+                                    $scope.city.districts.splice(index, 1);
+                                }
+                            });
+
+                            $scope.districtNowEdit = false;
+                            $scope.district_id = undefined;
+                            $scope.name = '';
+                            $scope.population = '';
+                        }
+                    })
+
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        }
+
+    }
 
     $scope.deleteCity = function () {
         if ($scope.city && $scope.city.city_id) {
