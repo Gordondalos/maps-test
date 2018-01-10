@@ -67,7 +67,7 @@ app.controller('cityController', ['$scope', 'jsonrpc', '$location', '$routeParam
                     console.log(error);
                 });
         } else {
-            alert( 'Error: Population is not number !')
+            alert('Error: Population is not number !')
         }
     };
 
@@ -120,7 +120,6 @@ app.controller('cityController', ['$scope', 'jsonrpc', '$location', '$routeParam
     };
 
 
-
     $scope.editDistrict = function (index) {
         _.each($scope.city.districts, function (item, i) {
             if (index === i) {
@@ -132,7 +131,7 @@ app.controller('cityController', ['$scope', 'jsonrpc', '$location', '$routeParam
         })
     };
 
-    $scope.saveDistrict = function(){
+    $scope.saveDistrict = function () {
         if ($scope.district_id) {
             jsonrpc.request('set_district', {
                 "key": "7c4073d1-ffd0-4e32-bd56-03829dc67126",
@@ -142,9 +141,9 @@ app.controller('cityController', ['$scope', 'jsonrpc', '$location', '$routeParam
             })
                 .then(function (value) {
                     _.each($scope.city.districts, function (item) {
-                        if(item.district_id === $scope.district_id){
-                           item.name = $scope.name;
-                           item.population = $scope.population;
+                        if (item.district_id === $scope.district_id) {
+                            item.name = $scope.name;
+                            item.population = $scope.population;
                             $scope.districtNowEdit = false;
                             $scope.district_id = undefined;
                             $scope.name = '';
@@ -160,7 +159,7 @@ app.controller('cityController', ['$scope', 'jsonrpc', '$location', '$routeParam
     };
 
 
-    $scope.deleteDistrict = function(){
+    $scope.deleteDistrict = function () {
         if ($scope.district_id) {
             jsonrpc.request('delete_district', {
                 "key": "7c4073d1-ffd0-4e32-bd56-03829dc67126",
@@ -168,9 +167,9 @@ app.controller('cityController', ['$scope', 'jsonrpc', '$location', '$routeParam
             })
                 .then(function (value) {
                     _.each($scope.city.districts, function (item) {
-                        if(Number(item.district_id) === Number($scope.district_id)){
+                        if (Number(item.district_id) === Number($scope.district_id)) {
                             _.each($scope.city.districts, function (it, index) {
-                                if(Number(it.district_id) === Number($scope.district_id)){
+                                if (Number(it.district_id) === Number($scope.district_id)) {
                                     $scope.city.districts.splice(index, 1);
                                 }
                             });
@@ -192,6 +191,7 @@ app.controller('cityController', ['$scope', 'jsonrpc', '$location', '$routeParam
 
     $scope.deleteCity = function () {
         if ($scope.city && $scope.city.city_id) {
+
             jsonrpc.request('delete_city', {
                 "key": "7c4073d1-ffd0-4e32-bd56-03829dc67126",
                 "city_id": $scope.city.city_id
