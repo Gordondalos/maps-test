@@ -3,10 +3,14 @@ function City() {
     this.city_id = '';
     this.lat = '';
     this.lon = '';
-    this.districs = [];
+    this.districts = [];
 }
 
 app.controller('cityController', ['$scope', 'jsonrpc', '$location', '$routeParams', 'myCitiesFactory', function ($scope, jsonrpc, $location, $routeParams, myCitiesFactory) {
+
+    $scope.city = new City();
+    $scope.name = '';
+    $scope.population = '';
 
     var getCity = function (id) {
         // По хорошему надо бы спросить, но не тут то было - метода нет
@@ -28,26 +32,43 @@ app.controller('cityController', ['$scope', 'jsonrpc', '$location', '$routeParam
             });
             $scope.city = currentCity;
         }
-
     };
-
-
-    $scope.city = new City();
-    $scope.name = '';
-    $scope.population = '';
 
     if ($routeParams && $routeParams.id) {
         getCity($routeParams.id);
     }
 
-    $scope.addDistrics = function () {
-        $scope.city.districs.push({
+    $scope.addDistricts = function () {
+        if (!$scope.city.districts) {
+            $scope.city.districts = [];
+        }
+
+        $scope.city.districts.push({
             name: $scope.name,
             population: $scope.population
         });
-        this.name = '';
-        this.population = '';
+        saveDistricts();
     };
+    
+    var saveDistricts = function () {
+        if ($scope.name && $scope.population) {
+            jsonrpc.request('create_district', {
+                "key": "7c4073d1-ffd0-4e32-bd56-03829dc67126",
+                "city_id": $scope.city.city_id,
+                "name": $scope.name,
+                "population": $scope.population
+            })
+                .then(function (value) {
+                    console.log(value);
+                    this.name = '';
+                    this.population = '';
+                })
+                .catch(function (error) {
+                    debugger;
+                    console.log(error);
+                });
+        }
+    }
 
     $scope.save = function () {
 
@@ -98,9 +119,9 @@ app.controller('cityController', ['$scope', 'jsonrpc', '$location', '$routeParam
     };
 
     $scope.delete = function (index) {
-        _.each($scope.city.districs, function (item, i) {
+        _.each($scope.city.districts, function (item, i) {
             if (index === i) {
-                $scope.city.districs.splice(i, 1);
+                $scope.city.districts.splice(i, 1);
             }
         })
     };

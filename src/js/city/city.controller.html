@@ -4,7 +4,7 @@
             <h2 class="mt-4">Add city</h2>
         </div>
         <div class="col-sm-6">
-            <h2 class="mt-4">districts</h2>
+            <h2 class="mt-4"  ng-if="isDelete()" >districts</h2>
         </div>
     </div>
 
@@ -25,7 +25,7 @@
             </div>
 
         </div>
-        <div class="col-sm-6">
+        <div class="col-sm-6"  >
             <div class="form-group">
                 <label for="name">name</label>
                 <input type="text" ng-model="name" class="form-control" id="name"  placeholder="name">
@@ -34,12 +34,12 @@
                 <label for="population">population</label>
                 <input type="text" ng-model="population" class="form-control" id="population"  placeholder="population">
             </div>
-            <button type="button" class="btn btn-primary" ng-click="addDistrics()">Add</button>
+            <button type="button" class="btn btn-primary" ng-click="addDistricts()">Add</button>
         </div>
     </div>
 
-    <h3 class="mt-4">districs list</h3>
-    <table class="table">
+    <h3 class="mt-4" ng-if="isDelete()" >districts list</h3  >
+    <table class="table"  ng-if="isDelete()" >
         <thead>
         <tr>
             <th>#</th>
@@ -49,7 +49,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr ng-repeat="item in city.districs">
+        <tr ng-repeat="item in city.districts">
             <th scope="row">{{$index +1}}</th>
             <td>{{item.name}}</td>
             <td>{{item.population}}</td>
