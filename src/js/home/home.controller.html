@@ -1,0 +1,24 @@
+<div class="container mt-4">
+    <div class="jumbotron">
+        <div id="map"></div>
+    </div>
+
+
+
+    <div class="row">
+
+        <div class="col-sm-3 mt-4" ng-repeat="city in cities">
+            <div class="card">
+                <div class="card-block">
+                    <h3 class="card-title">{{city.city_name}}</h3>
+                    <p class="card-text">lat: {{ city.lat}}</p>
+                    <p class="card-text">lon: {{ city.lon}}</p>
+                    <a href="/#!/edit/{{city.city_id}}" class="btn btn-primary">Go edit</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+</div>

@@ -1,0 +1,8 @@
+//= "../../node_modules/jquery/dist/jquery.slim.min.js"
+//= "../../node_modules/tether/dist/js/tether.js"
+//= "../../node_modules/bootstrap/dist/js/bootstrap.min.js"
+//= "../../node_modules/angular/angular.min.js"
+//= "../../node_modules/angular-route/angular-route.min.js"
+//= "../../node_modules/angular-jsonrpc-client/src/angular-jsonrpc-client.js"
+//= "../../node_modules/gmaps/gmaps.min.js"
+//= "../../node_modules/lodash/lodash.min.js"

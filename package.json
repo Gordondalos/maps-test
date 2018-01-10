@@ -1,0 +1,33 @@
+{
+  "name": "maps",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "gordondalos@gmail.com",
+  "license": "ISC",
+  "dependencies": {
+    "angular": "^1.6.6",
+    "angular-jsonrpc-client": "^0.5.3-a",
+    "angular-route": "^1.6.8",
+    "bootstrap": "^4.0.0-alpha.6",
+    "gmaps": "^0.4.24",
+    "lodash": "^4.17.4"
+  },
+  "devDependencies": {
+    "browser-sync": "^2.23.3",
+    "gulp": "^3.9.1",
+    "gulp-autoprefixer": "^4.1.0",
+    "gulp-imagemin": "^4.1.0",
+    "gulp-minify-css": "^1.2.4",
+    "gulp-rigger": "^0.5.8",
+    "gulp-sass": "^3.1.0",
+    "gulp-sourcemaps": "^2.6.3",
+    "gulp-uglify": "^3.0.0",
+    "gulp-watch": "^5.0.0",
+    "imagemin-pngquant": "^5.0.1",
+    "rimraf": "^2.6.2"
+  }
+}
