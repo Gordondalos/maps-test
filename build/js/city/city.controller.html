@@ -1,0 +1,67 @@
+<div class="container">
+    <div class="row">
+        <div class="col-sm-6">
+            <h2 class="mt-4">Add city</h2>
+        </div>
+        <div class="col-sm-6">
+            <h2 class="mt-4"  ng-if="isDelete()" >district</h2>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label for="cityName">city name</label>
+                <input type="text" ng-model="city.city_name" class="form-control" id="cityName"  placeholder="city name">
+            </div>
+            <div class="form-group">
+                <label for="latitude">latitude</label>
+                <input type="text" ng-model="city.lat" class="form-control" id="latitude"  placeholder="latitude">
+            </div>
+            <div class="form-group">
+                <label for="longitude">longitude</label>
+                <input type="text" ng-model="city.lon" class="form-control" id="longitude"  placeholder="longitude">
+            </div>
+
+        </div>
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label for="name">name</label>
+                <input type="text" ng-model="name" class="form-control" id="name"  placeholder="name">
+            </div>
+            <div class="form-group">
+                <label for="population">population</label>
+                <input type="text" ng-model="population" class="form-control" id="population"  placeholder="population">
+            </div>
+            <button type="button" ng-disabled="!isDelete()" ng-if="!districtNowEdit" class="btn btn-primary" ng-click="addDistricts()">Add</button>
+            <button type="button" ng-disabled="!isDelete()" ng-if="districtNowEdit" class="btn btn-primary" ng-click="saveDistrict()">Save District</button>
+            <button type="button" ng-disabled="!isDelete()" ng-if="districtNowEdit" class="btn btn-warning" ng-click="deleteDistrict()">Delete District</button>
+        </div>
+    </div>
+
+    <h3 class="mt-4" ng-if="isDelete()" >districts list</h3  >
+    <table class="table"  ng-if="isDelete()" >
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>name</th>
+            <th>population</th>
+            <th>action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="item in city.districts">
+            <th scope="row">{{$index +1}}</th>
+            <td>{{item.name}}</td>
+            <td>{{item.population}}</td>
+            <td><span class="pointer underline" ng-click="editDistrict($index)">edit</span></td>
+          </tr>
+        </tbody>
+    </table>
+
+    <button type="button" ng-if="isDelete()" class="btn btn-danger" ng-click="deleteCity()">Delete City</button>
+    <button type="button" class="btn btn-primary float-right" ng-click="save()" ng-disabled="isDisabled()">Save</button>
+
+
+</div>

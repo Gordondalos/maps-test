@@ -1,0 +1,31 @@
+<div class="container mt-4">
+    <div class="jumbotron">
+        <div id="map"></div>
+    </div>
+
+    <button class="btn btn-secondary" ng-click="sortByPopulation()">Sort by population</button>
+
+    <div class="row">
+
+        <div class="col-sm-12 mt-4" ng-repeat="city in cities">
+            <div class="card">
+                <div class="card-block">
+                    <h3 class="card-title">{{city.city_name}}</h3>
+                    <span class="card-text">lat: {{ city.lat}}</span>
+                    <span class="card-text">lon: {{ city.lon}}</span>
+                    <div ng-repeat="district in city.districts">
+                        <span>Name: {{district.name}}</span> - &nbsp
+                        <span>Population: {{district.population}}</span>
+                    </div>
+                    <div>
+                        <a href="/#!/edit/{{city.city_id}}" class="btn btn-primary">Go edit</a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+</div>
