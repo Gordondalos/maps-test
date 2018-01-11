@@ -25,7 +25,7 @@ var path = {
     src: {
         html: 'src/**/*.html',
         js: 'src/js/main.js',
-       // style: 'src/sass/main.sass',
+        style: 'src/sass/main.sass',
         img: 'src/img/**/*.*',
         fonts: 'src/fonts/**/*.*'
     },
@@ -102,7 +102,7 @@ gulp.task('fonts:build', function() {
 gulp.task('build', [
     'html:build',
     'js:build',
-    // 'style:build',
+    'style:build',
     'fonts:build',
     'image:build'
 ]);
@@ -112,9 +112,9 @@ gulp.task('watch', function(){
     watch([path.watch.html], function(event, cb) {
         gulp.start('html:build');
     });
-    // watch([path.watch.style], function(event, cb) {
-    //     gulp.start('style:build');
-    // });
+    watch([path.watch.style], function(event, cb) {
+        gulp.start('style:build');
+    });
     watch([path.watch.js], function(event, cb) {
         gulp.start('js:build');
     });
